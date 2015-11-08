@@ -1,4 +1,4 @@
-package com.epicodus.todo;
+package com.epicodus.todo.ui;
 
 import android.app.ListActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.epicodus.todo.R;
+import com.epicodus.todo.models.Task;
 
 import java.util.ArrayList;
 
@@ -27,6 +30,9 @@ public class MainActivity extends ListActivity {
         mNewTaskButton = (Button) findViewById(R.id.newTaskButton);
         mNewTaskText = (EditText) findViewById(R.id.newTask);
         mTasks = new ArrayList<String>();
+        for (Task task : Task.all()) {
+            mTasks.add(task.getDescription());
+        }
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mTasks);
         setListAdapter(mAdapter);
 
@@ -40,10 +46,15 @@ public class MainActivity extends ListActivity {
     }
 
     private void addTask() {
-        String newTask = mNewTaskText.getText().toString();
-        mTasks.add(newTask);
+        String description = mNewTaskText.getText().toString();
+        Task newTask = new Task(description);
+        newTask.save();
+        mTasks.add(description);
         mAdapter.notifyDataSetChanged();
 
     }
 
 }
+
+//new Select().from(Task.class).execute();
+//new Select().from(Task.class).where("Description= ?", description).executeSingle();
