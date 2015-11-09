@@ -18,13 +18,17 @@ public class Task extends Model {
     @Column(name = "Description")
     private String mDescription;
 
+    @Column(name = "Category")
+    private Category mCategory;
+
     public Task() {
         super();
     }
 
-    public Task(String description) {
+    public Task(String description, Category category) {
         super();
         mDescription = description;
+        mCategory = category;
     }
 
     public String getDescription() {
